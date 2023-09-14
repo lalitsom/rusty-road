@@ -45,7 +45,7 @@ pub fn game_tick(
     // update player position
     current_state = clear_screen_buffer(current_state);
     current_state.player_position.0 += event.0;
-    current_state.player_position.0 += event.1;
+    current_state.player_position.1 += event.1;
 
     current_state = update_player_position(current_state);
     // update obstacles position as per speed

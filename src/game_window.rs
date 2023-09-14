@@ -18,17 +18,18 @@ pub fn initialize_window() -> (Window) {
 
 pub fn captureEvents(window : Window) -> (Window, (i32,i32)){ // x,y
     let mut event : (i32,i32) = (0,0);
+    let step_size=10;
     if window.is_key_down(Key::Up){
-        event.1 -= 1;
+        event.1 -= step_size;
     }
     if window.is_key_down(Key::Down){
-        event.1 += 1;
+        event.1 += step_size;
     }
     if window.is_key_down(Key::Right){
-        event.0 += 1;
+        event.0 += step_size;
     }
     if window.is_key_down(Key::Left){
-        event.0 -= 1;
+        event.0 -= step_size;
     }
     (window, (event.0, event.1))
 }
