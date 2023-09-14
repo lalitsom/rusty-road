@@ -1,5 +1,5 @@
-use minifb::{Key, Window, WindowOptions};
 use crate::config;
+use minifb::{Key, Window, WindowOptions};
 
 pub fn initialize_window() -> (Window) {
     let mut window = Window::new(
@@ -16,19 +16,20 @@ pub fn initialize_window() -> (Window) {
     window
 }
 
-pub fn captureEvents(window : Window) -> (Window, (i32,i32)){ // x,y
-    let mut event : (i32,i32) = (0,0);
-    let step_size=10;
-    if window.is_key_down(Key::Up){
+pub fn captureEvents(window: Window) -> (Window, (i32, i32)) {
+    // x,y
+    let mut event: (i32, i32) = (0, 0);
+    let step_size = 10;
+    if window.is_key_down(Key::Up) {
         event.1 -= step_size;
     }
-    if window.is_key_down(Key::Down){
+    if window.is_key_down(Key::Down) {
         event.1 += step_size;
     }
-    if window.is_key_down(Key::Right){
+    if window.is_key_down(Key::Right) {
         event.0 += step_size;
     }
-    if window.is_key_down(Key::Left){
+    if window.is_key_down(Key::Left) {
         event.0 -= step_size;
     }
     (window, (event.0, event.1))

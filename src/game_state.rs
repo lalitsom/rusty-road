@@ -17,13 +17,13 @@ pub struct GameState {
     pub obstacle_gen_rate: u32,
 }
 
-pub fn initial_state() -> GameState {
+pub fn initialize_state() -> GameState {
     let game_state = GameState {
         buffer: vec![0; config::WIDTH * config::HEIGHT],
         game_state: Screens::Ready,
-        player_position: (500, 500),
+        player_position: (500, 500), // x,y
         player_size: 5,
-        obstacles: [(0, 0, 0); 30],
+        obstacles: [(0, 0, 0); 30], // x,y, radius
         score: 0,
         speed: 10,
         obstacle_gen_rate: 10,
@@ -38,10 +38,7 @@ pub fn clear_screen_buffer(mut current_state: GameState) -> GameState {
     current_state
 }
 
-pub fn game_tick(
-    mut current_state: GameState,
-    event: (i32, i32),
-) -> GameState {
+pub fn game_tick(mut current_state: GameState, event: (i32, i32)) -> GameState {
     // update player position
     current_state = clear_screen_buffer(current_state);
     current_state.player_position.0 += event.0;
@@ -61,17 +58,30 @@ pub fn game_tick(
     current_state
 }
 
-
 pub fn update_player_position(mut current_state: GameState) -> GameState {
-    
-    for x in -current_state.player_size..=current_state.player_size {
-        for y in -current_state.player_size..=current_state.player_size {
-            let player_x = current_state.player_position.0 + x;
-            let player_y = current_state.player_position.1 + y;
-            let index = ((player_y * (config::WIDTH as i32) + player_x)) as usize;
-            current_state.buffer[index] = config::PLAYER_COLOR;
+    current_state.buffer = put_on_buffer(
+        current_state.buffer,
+        (
+            current_state.player_position.0,
+            current_state.player_position.1,
+        ),
+        current_state.player_size,
+        config::PLAYER_COLOR,
+    );
+    current_state
+}
+
+pub fn put_on_buffer(
+    mut buffer: Vec<u32>,
+    (entity_x, entity_y): (i32, i32),
+    radius: i32,
+    color: u32,
+) -> Vec<u32> {
+    for x in -radius..=radius {
+        for y in -radius..=radius {
+            let index = ((entity_y + y) * (config::WIDTH as i32) + (entity_x + x)) as usize;
+            buffer[index] = config::PLAYER_COLOR;
         }
     }
-
-    current_state
+    buffer
 }

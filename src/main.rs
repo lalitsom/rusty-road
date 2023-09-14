@@ -6,7 +6,7 @@ mod utils;
 
 fn main() {
     let mut window = game_window::initialize_window();
-    let mut current_state = game_state::initial_state();
+    let mut current_state = game_state::initialize_state();
     let mut event: (i32, i32) = (0, 0);
 
     while window.is_open() && !window.is_key_down(Key::Escape) {
