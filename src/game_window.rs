@@ -1,7 +1,7 @@
 use crate::config;
 use minifb::{Key, Window, WindowOptions};
 
-pub fn initialize_window() -> (Window) {
+pub fn initialize_window() -> Window {
     let mut window = Window::new(
         "Rusty Road - ESC to exit",
         config::WIDTH,
